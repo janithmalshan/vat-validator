@@ -1,0 +1,32 @@
+.main-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: whitesmoke;
+  align-items: center;
+  justify-content: center;
+}
+
+.vat-detail {
+  height: 100px;
+}
+
+input[type=text] {
+  min-height: 50px;
+  border-radius: 30px;
+  color: #1A1A1A;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  padding-left: 22px;
+  border-color: #DEDEDE;
+  outline: none;
+}
+
+input::placeholder {
+  color: #707070;
+}
+
+input:focus {
+  border-color: #ffffff;
+}

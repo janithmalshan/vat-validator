@@ -1,0 +1,14 @@
+<div class="main-wrapper">
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+    <input type="text" name="vatNumber" ngModel required #vatNumber="ngModel">
+    <button>Submit</button>
+    <div class="vat-detail">
+      <p *ngIf="details">{{ details.VATNumber }}</p>
+    </div>
+
+    <app-loading *ngIf="searchButtonText === 'Searching'"></app-loading>
+
+    <p *ngIf="errMessage === ''">Something went wrong</p>
+
+  </form>
+</div>
