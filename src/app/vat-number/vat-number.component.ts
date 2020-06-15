@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {HttpService} from '../http.service';
-import {error} from 'util';
+import {VatNumber} from './vatNumber';
 
 @Component({
   selector: 'app-vat-number',
@@ -10,36 +10,38 @@ import {error} from 'util';
 })
 export class VatNumberComponent implements OnInit {
 
-  private vatNumber: number;
-  private details: object;
-  private searchButtonText: string;
-  private errMessage: string;
+  private details: VatNumber;
+  private isSearching: boolean;
+  private isError: boolean;
+  private errorMessage: string;
 
   constructor(private httpService: HttpService) {
   }
 
   ngOnInit() {
-    this.details = null;
   }
 
   onSubmit(f: NgForm) {
-    this.searchButtonText = 'Searching';
-    console.log(f.value);  // { first: '', last: '' }
-    this.vatNumber = f.value.vatNumber;
-    this.httpService.validateVatNumber(this.vatNumber).subscribe(
+    this.isSearching = true;
+    this.isError = false;
+    this.httpService.validateVatNumber(f.value.vatNumber).subscribe(
       data => {
-
-        this.details = data;  // false
-        this.searchButtonText = '';
-        console.log(this.details);
+        this.details = data;
+        /** Check vat number validity */
+        if (!this.details.Valid) {
+          this.errorMessage = 'Invalid VAT Number';
+          this.details = null;
+          this.isError = true;
+        }
+        this.isSearching = false;
       },
+      /** Error handling */
       (err) => {
-        console.log(err);
-        this.searchButtonText = '';
-        this.errMessage = '';
+        this.details = null;
+        this.isSearching = false;
+        this.isError = true;
+        this.errorMessage = 'Something went wrong';
       }
     );
   }
-
-
 }

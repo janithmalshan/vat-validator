@@ -1,14 +1,28 @@
 <div class="main-wrapper">
+
+  <h2>Enter VAT Number</h2>
+
   <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
-    <input type="text" name="vatNumber" ngModel required #vatNumber="ngModel">
-    <button>Submit</button>
-    <div class="vat-detail">
-      <p *ngIf="details">{{ details.VATNumber }}</p>
-    </div>
-
-    <app-loading *ngIf="searchButtonText === 'Searching'"></app-loading>
-
-    <p *ngIf="errMessage === ''">Something went wrong</p>
-
+    <input type="text" name="vatNumber" maxlength="12" ngModel required #vatNumber="ngModel" autocomplete="off">
+    <button [disabled]="f.invalid">Search</button>
   </form>
+  <!--  VAT num search form -->
+
+  <div class="error-mgs">
+    <p *ngIf="isError">{{errorMessage}}</p>
+  </div>
+  <!--  Error message -->
+
+  <div class="vat-detail">
+    <div *ngIf="details">
+      <p>VAT Number : {{ details.VATNumber }}</p>
+      <p>Name : {{ details.Name }}</p>
+      <p>Country Code : {{ details.CountryCode }}</p>
+    </div>
+  </div>
+  <!--  Details -->
+
+  <app-loading *ngIf="isSearching"></app-loading>
+  <!--  Loading -->
 </div>
+<!-- EE100247019 -->
